@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Handlee&family=Merienda:wght@300;400;500;600;700;800;900&display=swap');
+
+
+.toolbar {
+  font-family: 'Merienda', cursive;
+    display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.logo {
+  a {
+    text-decoration: none;
+    & :hover {
+      transition: all 0.4s;
+      color: #fff;
+      transform: scale(1.1);
+    }
+  }
+}
