@@ -32,6 +32,7 @@ export default function UserDetils() {
   const { usersData, loadingPage } = useStore();
   const newData = usersData.find(x => x.id == params.id);
   console.log(newData);
+  
 
   return (
     <>
@@ -237,7 +238,7 @@ export default function UserDetils() {
                           </Badge>{' '}
                         </TableCell>
                         <TableCell>
-                          <DoneAll sx={{color :'#36d7b7'}} />
+                          <DoneAll sx={{ color: '#36d7b7' }} />
                         </TableCell>
 
                         <TableCell>2555 $ </TableCell>
@@ -263,7 +264,6 @@ export default function UserDetils() {
                         <TableCell>
                           <GridLoader color='#ffc000' size={10} />{' '}
                         </TableCell>
-                      
 
                         <TableCell>2555 $ </TableCell>
                       </TableRow>

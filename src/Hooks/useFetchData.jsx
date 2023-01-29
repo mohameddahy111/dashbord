@@ -14,7 +14,7 @@ const useFetchData = (url, parmes) => {
       .then(setLoading(false))
       .catch(err => {
         setError(err);
-        loading(false);
+        setLoading(false);
       });
   }, [parmes]);
 

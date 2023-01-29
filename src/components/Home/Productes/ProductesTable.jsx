@@ -7,26 +7,43 @@ import {
   TableBody,
   TableCell,
   TableContainer,
+  TableFooter,
   TableHead,
   TableRow,
   Typography,
 } from '@mui/material';
 import { Container } from '@mui/system';
+import axios from 'axios';
 import React from 'react';
+import { useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Pagention from '../Pagention';
 import DialogPop from '../useres/DialogPop';
 
-export default function ProductesTable({ data }) {
+export default function ProductesTable() {
+  const [data, setData] = useState([]);
+  useEffect(() => {
+    const getData = async () => {
+      await axios
+        .get(
+          'https://zincoint.com/api/recently_products?min=&max=&category_id=&brand_id=&sort='
+        )
+        .then(res => {
+          setData(res.data.data.data);
+        });
+    };
+    return getData;
+  }, []);
   const navigate = useNavigate();
   console.log(data);
-
   return (
     <TableContainer component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
             <TableCell>
-              <Typography>ID</Typography>
+              <Typography>pk</Typography>
             </TableCell>
             <TableCell>
               <Typography>Image</Typography>
@@ -35,10 +52,10 @@ export default function ProductesTable({ data }) {
               <Typography>Name</Typography>
             </TableCell>
             <TableCell>
-              <Typography>category</Typography>
+              <Typography>Brand</Typography>
             </TableCell>
             <TableCell>
-              <Typography>count</Typography>
+              <Typography>stockLevel</Typography>
             </TableCell>
             <TableCell>
               <Typography>Actione</Typography>
@@ -52,20 +69,36 @@ export default function ProductesTable({ data }) {
                 <Typography>{x.id}</Typography>
               </TableCell>
               <TableCell>
-                <IconButton onClick={() => navigate(`/home/productes/${x.id}`)}>
-                  <img src={x.image} alt={x.title} width={'50px'} height='50px' />
+                <IconButton
+                  onClick={() =>
+                    navigate(`/home/productes/${x.articleCodes[0]}`)
+                  }
+                >
+                  <img
+                    src={x.image.name}
+                    alt={''}
+                    width={'50px'}
+                    height='50px'
+                  />
                 </IconButton>
               </TableCell>
               <TableCell>
-                <Typography>{x.title} </Typography>
+                <Typography>{x.name_en} </Typography>
               </TableCell>
               <TableCell>
-                <Typography>{x.category} </Typography>
+                <Typography>{x.name_ar} </Typography>
               </TableCell>
               <TableCell>
-                <Typography>{x.rating.count} </Typography>
+                {/* <Typography>{x.stock.stockLevel} </Typography> */}
               </TableCell>
-              <TableCell sx={{ display: 'flex', gap: '10px' ,alignItems:'center' , height :'100px'}}>
+              <TableCell
+                sx={{
+                  display: 'flex',
+                  gap: '10px',
+                  alignItems: 'center',
+                  height: '100px',
+                }}
+              >
                 <Button
                   startIcon={<Upload />}
                   color='warning'
@@ -78,6 +111,11 @@ export default function ProductesTable({ data }) {
             </TableRow>
           ))}
         </TableBody>
+        <TableFooter>
+          <TableRow>
+            <Pagention numPage={data.page} />{' '}
+          </TableRow>
+        </TableFooter>
       </Table>
     </TableContainer>
   );
